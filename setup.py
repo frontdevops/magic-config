@@ -19,7 +19,7 @@ def get_description() -> str:
     :return: description
     :rtype: str
     """
-    with open('../README.rst', 'r', encoding='utf-8') as f:
+    with open('README.rst', 'r', encoding='utf-8') as f:
         return f.read()
 
 
@@ -28,9 +28,9 @@ def get_version() -> str:
     Read version
     :return: str
     """
-    txt = (WORK_DIR / 'src' / 'magic_config' / '__init__.py').read_text('utf-8')
+    txt = (WORK_DIR / 'src' / '__init__.py').read_text('utf-8')
     try:
-        return re.findall(r"^__version__ = '([^']+)'\r?$", txt, re.M)[0]
+        return re.findall(r"^__version__ = '([^']+)'\r?$", txt, re.M)
     except IndexError:
         raise RuntimeError('Unable to determine version.')
 
