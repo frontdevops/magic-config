@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "magic_config_geekjob"
+version = "0.0.1"
+authors = [
+    { name = "Alexander Majorov", email = "alexander.majorov@gmail.com" },
+]
+description = "A simple library for easy handling of .env files and environment variables configurations"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/frontdevops/magic-config"
+"Bug Tracker" = "https://github.com/frontdevops/magic-config/issues"
+
