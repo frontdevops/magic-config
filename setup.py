@@ -36,7 +36,7 @@ def get_version() -> str:
 
 
 setup(
-    name='magic_config',
+    name='magic_config_geekjob',
     version=get_version(),
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
     url='https://github.com/frontdevops/magic-config',
