@@ -1,4 +1,4 @@
-# magic-config
+# Magic Config
 A simple library for easy handling of .env files and environment variables configurations
 
 This library is a class for working with configurations. The class is implemented as a singleton, which allows you to always have exactly one instance of the same data registry everywhere.
