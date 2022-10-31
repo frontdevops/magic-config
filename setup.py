@@ -46,7 +46,7 @@ setup(
     long_description=get_description(),
     long_description_content_type="text/markdown",
     url='https://github.com/frontdevops/magic-config',
-    # download_url="https://github.com/mike-huls/toolbox_public/archive/refs/tags/0.0.3.tar.gz",
+    download_url="https://github.com/frontdevops/magic-config/archive/refs/tags/0.1.9.tar.gz",
     project_urls={
         "Bug Tracker": "https://github.com/frontdevops/magic-config/issues",
     },
