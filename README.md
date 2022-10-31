@@ -5,6 +5,13 @@ This library is a class for working with configurations. The class is implemente
 
 The configuration data itself is taken from the .env file or from environment variables.
 
+## Installation
+```
+pip install magic-config
+```
+
+
+
 ## Example:
 ```sh
 DEBUG=1 myapp.py
