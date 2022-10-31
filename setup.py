@@ -14,11 +14,11 @@ if sys.version_info < MINIMAL_PY_VERSION:
 
 def get_description() -> str:
     """
-    Read full description from 'README.rst'
+    Read full description from 'README.md'
     :return: description
     :rtype: str
     """
-    with open('README.rst', 'r', encoding='utf-8') as f:
+    with open('README.md', 'r', encoding='utf-8') as f:
         return f.read()
 
 
