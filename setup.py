@@ -48,6 +48,8 @@ setup(
     url='https://github.com/frontdevops/magic-config',
     download_url="https://github.com/frontdevops/magic-config/archive/refs/tags/0.1.9.tar.gz",
     project_urls={
+        "Documentation": "https://github.com/frontdevops/magic-config/blob/main/README.md",
+        "Source": "https://github.com/frontdevops/magic-config",
         "Bug Tracker": "https://github.com/frontdevops/magic-config/issues",
     },
     keywords=["pypi", "config", "tutorial"],
