@@ -94,3 +94,13 @@ Config.DEBUG # True
 Config.DEBUG_STEP # True
 Config.DEBUG_USER_ID # int(10011888)
 ```
+
+Instead default .env file in source root you can configure path to .env file:
+
+```py
+# for example
+
+env_file = os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + "/../my.env")
+MagicConfig(env_file=env_file)
+
+```
