@@ -26,16 +26,19 @@ class MagicConfig(dict):
         cls.__instance = super(MagicConfig, cls).__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, data: dict | None = None, env_file=None) -> None:
+    def __init__(self, data: dict = {}, env_file=None, **kwargs) -> None:
         """
         Constructor
         """
         super().__init__()
 
+        if len(kwargs) > 0:
+            data.update(kwargs)
+
         if env_file is not None:
             self.__env_file = env_file
 
-        if data is not None:
+        if len(data) > 0:
             for key, val in data.items():
                 self.__data[key.upper()] = val
 

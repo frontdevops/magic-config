@@ -17,6 +17,12 @@ class TestMagicConfig(unittest.TestCase):
             "Number": 456,
             "Boolean": True
         })
+
+        MagicConfig(
+            num=789,
+            bln=True
+        )
+
         # env_file = os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + "/../.env")
         # MagicConfig(env_file=env_file)
 
@@ -25,8 +31,10 @@ class TestMagicConfig(unittest.TestCase):
         self.assertEqual(Config, MagicConfig())
 
     def test_magic_config(self):
-        self.assertEqual(Config.Number, 456)
-        self.assertTrue(Config.Boolean)
+        self.assertEqual(Config.number, 456)
+        self.assertTrue(Config.boolean)
+        self.assertEqual(Config.num, 789)
+        self.assertTrue(Config.bln)
 
     def test_env_loaded(self):
         print("\nRun test_env_loaded")
