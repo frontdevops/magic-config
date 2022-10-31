@@ -1,6 +1,6 @@
 import os
 import unittest
-from src.magic_config.magicconfig import Config, MagicConfig
+from magic_config.magic_config import Config, MagicConfig
 
 
 class TestMagicConfig(unittest.TestCase):

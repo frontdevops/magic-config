@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-import pathlib
 import re
 import sys
-
+import pathlib
 from setuptools import find_packages, setup
 
 WORK_DIR = pathlib.Path(__file__).parent
 
 # Check python version
-MINIMAL_PY_VERSION = (3, 10)
+MINIMAL_PY_VERSION = (3, 10, 8)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aiogram works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
@@ -28,39 +27,51 @@ def get_version() -> str:
     Read version
     :return: str
     """
-    txt = (WORK_DIR / 'src' / '__init__.py').read_text('utf-8')
+    txt = (WORK_DIR / 'pyproject.toml').read_text('utf-8')
     try:
-        return re.findall(r"^__version__ = '([^']+)'\r?$", txt, re.M)
+        return re.findall(r"^version = \"([^']+)\"\r?$", txt, re.M)[0]
     except IndexError:
         raise RuntimeError('Unable to determine version.')
 
 
 setup(
-    name='magic_config_geekjob',
+    name='magic_config',
     version=get_version(),
-    packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
-    url='https://github.com/frontdevops/magic-config',
     license='MIT',
     author='Alexander Majorov',
-    python_requires='>=3.10.8',
     author_email='alexander.majorov@gmail.com',
     description=('Is a pretty simple library for working with configuration'
                  ' files based on the .env files and environment variables'
                  ),
     long_description=get_description(),
+    long_description_content_type="text/markdown",
+    url='https://github.com/frontdevops/magic-config',
+    # download_url="https://github.com/mike-huls/toolbox_public/archive/refs/tags/0.0.3.tar.gz",
+    project_urls={
+        "Bug Tracker": "https://github.com/frontdevops/magic-config/issues",
+    },
+    keywords=["pypi", "config", "tutorial"],
     classifiers=[
+        # 'Development Status :: 4 - Beta',
         'Development Status :: 5 - Production/Stable',
-        'Environment :: Console',
-        'Framework :: None',
-        'Intended Audience :: Developers',
-        'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.10.8',
         'Programming Language :: Python :: 3.11',
         'Topic :: Software Development :: Libraries :: Application Utilities',
     ],
-    install_requires=[
-        'python-dotenv>=0.21.0',
-    ],
+    package_dir={"": "magic_config"},
+    packages=find_packages(where="magic_config", exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
     include_package_data=False,
+    python_requires='>=3.10.8',
+    install_requires=[
+        "python-dotenv>=0.21.0",
+    ],
+    extras_require={
+        "dev": [
+            "pytest >= 3.7",
+            "check-manifest",
+            "twine"
+        ]
+    },
 )
