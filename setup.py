@@ -34,9 +34,11 @@ def get_version() -> str:
         raise RuntimeError('Unable to determine version.')
 
 
+version = get_version()
+
 setup(
     name='magic_config',
-    version=get_version(),
+    version=version,
     license='MIT',
     author='Alexander Majorov',
     author_email='alexander.majorov@gmail.com',
@@ -46,13 +48,13 @@ setup(
     long_description=get_description(),
     long_description_content_type="text/markdown",
     url='https://github.com/frontdevops/magic-config',
-    download_url="https://github.com/frontdevops/magic-config/archive/refs/tags/0.1.11.tar.gz",
+    download_url=f"https://github.com/frontdevops/magic-config/archive/refs/tags/{version}.tar.gz",
     project_urls={
         "Documentation": "https://github.com/frontdevops/magic-config/blob/main/README.md",
         "Source": "https://github.com/frontdevops/magic-config",
         "Bug Tracker": "https://github.com/frontdevops/magic-config/issues",
     },
-    keywords=["pypi", "config", "library"],
+    keywords=["pypi", "config", "library", "magic"],
     classifiers=[
         # 'Development Status :: 4 - Beta',
         'Development Status :: 5 - Production/Stable',

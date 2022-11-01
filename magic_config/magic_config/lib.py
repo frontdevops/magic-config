@@ -31,10 +31,15 @@ class MagicConfig(dict):
             case _:
                 default = None
 
+        val = os.getenv(key, default)
+        if val is None:
+            self.__data[key] = default
+            return
+
         if cast == "obj":
-            self.__data[key] = json.loads(os.getenv(key, default))
+            self.__data[key] = json.loads(val)
         else:
-            self.__data[key] = cast(os.getenv(key, default))
+            self.__data[key] = cast(val)
 
     def __new__(cls, *args, **kwargs) -> 'MagicConfig':
         """Create singleton instance of MagicConfig"""
