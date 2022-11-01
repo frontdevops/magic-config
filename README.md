@@ -10,6 +10,11 @@ The configuration data itself is taken from the .env file or from environment va
 pip install magic-config
 ```
 
+## Upgrade
+```
+pip install --upgrade magic-config
+```
+
 
 
 ## Example:
