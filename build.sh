@@ -12,5 +12,5 @@ rm -vrf magic_config/magic_config.egg-info
 python -m build
 
 #python -m twine upload --verbose --repository testpypi dist/*
-python -m twine upload --verbose dist/* --skip-existing
+python -m twine upload --verbose dist/*
 
