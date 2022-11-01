@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import builtins
@@ -17,7 +18,23 @@ class MagicConfig(dict):
         """Set attribute to object"""
         key = key.upper()
         cast = getattr(builtins, t)
-        self.__data[key] = cast(os.getenv(key))
+
+        match cast:
+            case "int":
+                default = 0
+            case "float":
+                default = 0.0
+            case "bool":
+                default = False
+            case "str":
+                default = ""
+            case _:
+                default = None
+
+        if cast == "obj":
+            self.__data[key] = json.loads(os.getenv(key, default))
+        else:
+            self.__data[key] = cast(os.getenv(key, default))
 
     def __new__(cls, *args, **kwargs) -> 'MagicConfig':
         """Create singleton instance of MagicConfig"""
