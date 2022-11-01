@@ -1,5 +1,5 @@
 # Magic Config
-A simple library for easy handling of .env files and environment variables configurations
+A simple library for easy handling of .env files and environment variables configurations.
 
 This library is a class for working with configurations. The class is implemented as a singleton, which allows you to always have exactly one instance of the same data registry everywhere.
 
@@ -40,12 +40,11 @@ if Config.debug:
 # You can access to variables as key of dict object
 if Config["debug"]:
   ...
-
 ```
 
 ## Configure custom variables
 ```py
-You can add variables to the object
+# You can add variables to the object
 
 # as dict
 MagicConfig({

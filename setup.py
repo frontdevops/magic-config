@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import sys
+import tomllib
 import pathlib
 from setuptools import find_packages, setup
 
@@ -13,42 +14,34 @@ if sys.version_info < MINIMAL_PY_VERSION:
 
 
 def get_description() -> str:
-    """
-    Read full description from 'README.md'
-    :return: description
-    :rtype: str
-    """
     with open('README.md', 'r', encoding='utf-8') as f:
         return f.read()
 
 
-def get_version() -> str:
-    """
-    Read version
-    :return: str
-    """
-    txt = (WORK_DIR / 'pyproject.toml').read_text('utf-8')
+def get_meta_info() -> dict:
     try:
-        return re.findall(r"^version = \"([^']+)\"\r?$", txt, re.M)[0]
+        with open("pyproject.toml", "rb") as f:
+            return tomllib.load(f)
     except IndexError:
         raise RuntimeError('Unable to determine version.')
 
 
-version = get_version()
+project_meta = get_meta_info()
+project_dir = project_meta["project"]["name"].replace("-", "_")
+
 
 setup(
-    name='magic_config',
-    version=version,
-    license='MIT',
-    author='Alexander Majorov',
-    author_email='alexander.majorov@gmail.com',
-    description=('Is a pretty simple library for working with configuration'
-                 ' files based on the .env files and environment variables'
-                 ),
+    license="MIT",
+    name=project_meta["project"]["name"],
+    version=project_meta["project"]["version"],
+    author=project_meta["project"]["authors"][0]["name"],
+    author_email=project_meta["project"]["authors"][0]["email"],
+    description=project_meta["project"]["description"],
     long_description=get_description(),
     long_description_content_type="text/markdown",
     url='https://github.com/frontdevops/magic-config',
-    download_url=f"https://github.com/frontdevops/magic-config/archive/refs/tags/{version}.tar.gz",
+    download_url=("https://github.com/frontdevops/magic-config/archive/refs/tags/"
+                  f'{project_meta["project"]["version"]}.tar.gz'),
     project_urls={
         "Documentation": "https://github.com/frontdevops/magic-config/blob/main/README.md",
         "Source": "https://github.com/frontdevops/magic-config",
