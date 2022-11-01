@@ -52,7 +52,7 @@ setup(
         "Source": "https://github.com/frontdevops/magic-config",
         "Bug Tracker": "https://github.com/frontdevops/magic-config/issues",
     },
-    keywords=["pypi", "config", "tutorial"],
+    keywords=["pypi", "config", "library"],
     classifiers=[
         # 'Development Status :: 4 - Beta',
         'Development Status :: 5 - Production/Stable',

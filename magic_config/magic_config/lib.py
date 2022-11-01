@@ -9,7 +9,7 @@ class MagicConfig(dict):
     """
     MagicConfig magic class :)
     """
-    __instance: 'Self' = None
+    __instance: 'MagicConfig' = None
     __data: dict = {}
     __env_file = None
 
@@ -19,7 +19,7 @@ class MagicConfig(dict):
         cast = getattr(builtins, t)
         self.__data[key] = cast(os.getenv(key))
 
-    def __new__(cls, *args, **kwargs) -> 'Self':
+    def __new__(cls, *args, **kwargs) -> 'MagicConfig':
         """Create singleton instance of MagicConfig"""
         if cls.__instance:
             return cls.__instance

@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "magic-config"
-version = "0.1.10"
+version = "0.1.11"
 authors = [
     { name = "Alexander Majorov", email = "alexander.majorov@gmail.com" },
 ]
@@ -24,4 +24,3 @@ classifiers = [
 "Homepage" = "https://github.com/frontdevops/magic-config"
 "Documentation" = "https://github.com/frontdevops/magic-config/blob/main/README.md"
 "Bug Tracker" = "https://github.com/frontdevops/magic-config/issues"
-
