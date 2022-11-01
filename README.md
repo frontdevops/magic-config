@@ -15,6 +15,8 @@ pip install magic-config
 pip install --upgrade magic-config
 ```
 
+Pypi url: https://pypi.org/project/magic-config/
+
 
 
 ## Example:
