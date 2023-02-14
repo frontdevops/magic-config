@@ -1,3 +1,7 @@
+"""
+This code defines a Python class MagicConfig which inherits from a dictionary object, and can be used to manage configuration data by loading it
+from environment variables and an optional .env file.
+"""
 import json
 import os
 import sys
@@ -9,13 +13,20 @@ from dotenv import dotenv_values
 class MagicConfig(dict):
     """
     MagicConfig magic class :)
+    Define a singleton MagicConfig class which inherits from a dictionary object.
     """
+    # Declare a private class variable for the singleton instance.
     __instance: 'MagicConfig' = None
+    # Declare a private class variable for the configuration data.
     __data: dict = {}
-    __env_file = None
+    # Declare a private class variable for the .env file.
+    __env_file: str = None
 
     def set_attr(self, key: str, t: str = "str") -> None:
-        """Set attribute to object"""
+        """
+        Set attribute to object
+        Define a method to set attributes with default values.
+        """
         key = key.upper()
         cast = getattr(builtins, t)
 
