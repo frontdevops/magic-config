@@ -10,7 +10,7 @@ WORK_DIR = pathlib.Path(__file__).parent
 # Check python version
 MINIMAL_PY_VERSION = (3, 10, 8)
 if sys.version_info < MINIMAL_PY_VERSION:
-    raise RuntimeError('aiogram works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
+    raise RuntimeError('magic_config works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
 
 def get_description() -> str:
