@@ -1,113 +1,148 @@
 # Magic Config
-A simple library for easy handling of .env files and environment variables configurations.
 
-This library is a class for working with configurations. The class is implemented as a singleton, which allows you to always have exactly one instance of the same data registry everywhere.
+A simple library for easy handling of `.env` files and environment-variables configurations.  
+Implements a singleton class so that everywhere in your code you get exactly one shared configuration registry.
 
-The configuration data itself is taken from the .env file or from environment variables.
+> **Requires:** Python 3.9+ (we make use of `str.removeprefix`/`removesuffix` from PEP 616 and modern typing features; Python 3.13 is recommended for full support of `Self`, `Final`, `|`-unions, etc.)
+
+The configuration data is loaded in this order of precedence:
+
+1. **Explicit constructor arguments** (positional `data: dict` or any `**kwargs`)  
+2. **`ENV_FILE` environment variable** (if set, points to your `.env` file)  
+3. **`env_file=` constructor argument** (pass a path when instantiating)  
+4. **Default `.env` in the current working directory**  
+5. **Raw OS environment variables**  
+
+Built-in support for:
+
+- **Case-insensitive** access (`Config.DEBUG`, `Config.debug`, `Config["Debug"]` all work)  
+- **Automatic type casting** via a `magic.config` file in your project root  
+- **Automatic MongoDB/MySQL URI generation** from individual host/user/password vars  
+- **Flask integration** via `app.config.from_mapping(Config)` or `app.config.from_object(Config)` (with a `__dir__` override)
+
+---
 
 ## Installation
-```
+
+```bash
 pip install magic-config
 ```
-
 ## Upgrade
 ```
 pip install --upgrade magic-config
 ```
 
-Pypi url: https://pypi.org/project/magic-config/
+PyPI URL: https://pypi.org/project/magic-config/
 
-
-
-## Example:
-```sh
-DEBUG=1 myapp.py
+## Quickstart
+### 1. Simple usage
+```bash
+DEBUG=1 python myapp.py
 ```
 
-My app script:
-
-```py
+```python
 from magic_config import Config
 
-# You can access to variables as property of class object
 if Config.DEBUG:
-  ...
+    print("Debug mode is ON")
+```
 
-# You can access to variables in lower case (and camel case, and other case)
+You can also do:
+```python
 if Config.debug:
-  ...
-
-# You can access to variables as key of dict object
-if Config["debug"]:
-  ...
+    ...
+if Config["DeBuG"]:
+    ...
 ```
 
-## Configure custom variables
-```py
-# You can add variables to the object
+### 2. Custom variables on the fly
+You can pass your own values when you first import/instantiate:
+```python
+from magic_config import MagicConfig, Config
+from pathlib import Path
 
-# as dict
-MagicConfig({
-    "Number": 456,
-    "Boolean": True
-})
-
-# as named arguments
+# Positional dict + kwargs
 MagicConfig(
-    Number=456,
-    Boolean=True
+    {"NUMBER": 456},
+    Boolean=True,
+    BASE_DIR=Path(__file__).resolve().parent
 )
+
+# Or only kwargs
+MagicConfig(
+    BASE_DIR=Path(__file__).resolve().parent
+)
+
+# Afterwards you can read:
+print(Config.BASE_DIR)   # e.g. /www/sites/newhr.org/data/server
+print(Config.NUMBER)     # 456
+print(Config.BOOLEAN)    # True
 ```
 
-## Prepared autogenerators for DB URIs
-For example in .env  file you can write only this data:
+### 3. Override .env file with ENV_FILE
+Instead of relying on the default .env lookup, simply set ENV_FILE in your shell:
+```bash
+ENV_FILE=dev-1.env python app.py
 ```
-MONGO_HOST="127.0.0.1"
-MONGO_USER="user"
-MONGO_PWD="*****"
-MONGO_DB="test"
+
+The library will load variables from dev-1.env (instead of .env in CWD).
+
+### 4. Automatic DB-URI generation
+In your .env:
+```ini
+MONGO_HOST=127.0.0.1
+MONGO_USER=user
+MONGO_PWD=secret
+MONGO_DB=test
 MONGO_PORT=27017
 ```
 
-and in code you can call the MONGO_URL
-
-```py
+```python
 from magic_config import Config
 
-Config.MONGO_URL
-
-# output:
-# mongodb://user:passwd@127.0.0.1:27017/test?authSource=admin&tls=false
+print(Config.MONGO_URI)
+# => "mongodb://user:secret@127.0.0.1:27017/test?authSource=admin&tls=false"
 ```
 
-## Set type casting for environment variables
+Likewise for MYSQL_HOST, MYSQL_USER, etc. — just call Config.MYSQL_URI.
 
-For example if you create in source root magic.config file and write:
-```bash
+### 5. Type casting via magic.config
+Create magic.config in your project root:
+```ini
 DEBUG="bool"
-DEBUG_STEP="bool"
-DEBUG_USER_ID="int"
+MAX_USERS="int"
+FEATURE_FLAGS="obj"
 ```
-
-then you run 
 
 ```bash
-DEBUG=1 DEBUG_STEP=1 DEBUG_USER_ID=1 DEBUG_USER_ID=10011888 python server.py
+DEBUG=1 MAX_USERS=42 FEATURE_FLAGS='{"beta":true}' python server.py
 ```
 
-```py
-Config.DEBUG # True
-Config.DEBUG_STEP # True
-Config.DEBUG_USER_ID # int(10011888)
+```python
+from magic_config import Config
+
+assert isinstance(Config.DEBUG, bool)            # True
+assert isinstance(Config.MAX_USERS, int)         # 42
+assert isinstance(Config.FEATURE_FLAGS, dict)    # {"beta": True}
 ```
 
-## Custom file path
-Instead default .env file in source root you can configure path to .env file:
+### 6. Flask integration
+By default Flask’s app.config.from_object() only picks up actual attributes listed in dir(obj).
+We provide a small `__dir__` override in MagicConfig so you can do:
+```python
+from flask import Flask
+from magic_config import Config
 
-```py
-# for example
-
-env_file = os.path.realpath(os.path.dirname(os.path.realpath(__file__)) + "/../my.env")
-MagicConfig(env_file=env_file)
-
+app = Flask(__name__)
+app.config.from_object(Config)
 ```
+
+All your uppercase keys will be imported.
+Alternatively, you can treat Config as a plain mapping:
+```python
+app.config.from_mapping(Config)
+# or
+app.config.update(Config)
+```
+
+Enjoy a cleaner, more powerful way to manage your application configuration!
