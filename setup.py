@@ -8,7 +8,7 @@ from setuptools import find_packages, setup
 WORK_DIR = pathlib.Path(__file__).parent
 
 # Check python version
-MINIMAL_PY_VERSION = (3, 10, 8)
+MINIMAL_PY_VERSION = (3, 12, 0)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('magic_config works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
@@ -53,14 +53,14 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.10.8',
-        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Topic :: Software Development :: Libraries :: Application Utilities',
     ],
     package_dir={"": "magic_config"},
     packages=find_packages(where="magic_config", exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
     include_package_data=False,
-    python_requires='>=3.10.8',
+    python_requires='>=3.12.0',
     install_requires=[
         "python-dotenv>=0.21.0",
     ],
