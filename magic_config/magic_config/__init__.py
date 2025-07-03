@@ -1,7 +1,7 @@
 # import sys
-# if sys.version_info < (3, 10, 8):
+# if sys.version_info < (3, 13, 0):
 #     raise ImportError('Your Python version {0} is not supported by MagicConfig, please install '
-#                       'Python 3.10.8+'.format('.'.join(map(str, sys.version_info[:3]))))
+#                       'Python 3.13+'.format('.'.join(map(str, sys.version_info[:3]))))
 
 from .lib import MagicConfig, Config
 
@@ -10,5 +10,5 @@ __all__ = (
     "Config"
 )
 
-__version__ = '0.1.12'
+__version__ = '1.0.0'
 
